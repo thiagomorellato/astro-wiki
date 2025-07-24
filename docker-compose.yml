@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  mediawiki:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      MEDIAWIKI_DB_TYPE: mysql
+      MEDIAWIKI_DB_HOST: db4free.net
+      MEDIAWIKI_DB_PORT: 3306
+      MEDIAWIKI_DB_NAME: astro_wiki
+      MEDIAWIKI_DB_USER: astro_user
+      MEDIAWIKI_DB_PASSWORD: Possopressentir!
+    volumes:
+      - mediawiki_data:/var/www/html
+
+volumes:
+  mediawiki_data:
