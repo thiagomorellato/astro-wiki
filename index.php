@@ -1,77 +1,58 @@
-<?php
+<?php // For broken web servers: ><pre>
+
+// If you are reading this in your web browser, your server is probably
+// not configured correctly to run PHP applications!
+//
+// See the README, INSTALL, and UPGRADE files for basic setup instructions
+// and pointers to the online documentation.
+//
+// https://www.mediawiki.org/wiki/Special:MyLanguage/MediaWiki
+//
+// -------------------------------------------------
 
 /**
- * Forwarder/Router to doku.php
+ * The.php entry point for web browser navigations, usually routed to
+ * an Action or SpecialPage subclass.
  *
- * In normal usage, this script simply redirects to doku.php. However it can also be used as a routing
- * script with PHP's builtin webserver. It takes care of .htaccess compatible rewriting, directory/file
- * access permission checking and passing on static files.
+ * @see MediaWiki\Actions\ActionEntryPoint The implementation.
  *
- * Usage example:
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *   php -S localhost:8000 index.php
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Andreas Gohr <andi@splitbrain.org>
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  */
 
-if (PHP_SAPI != 'cli-server') {
-    if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
-    require_once(DOKU_INC . 'inc/init.php');
+use MediaWiki\Actions\ActionEntryPoint;
+use MediaWiki\Context\RequestContext;
+use MediaWiki\EntryPointEnvironment;
+use MediaWiki\MediaWikiServices;
 
-    send_redirect(wl($conf['start']));
-}
+define( 'MW_ENTRY_POINT', 'index' );
 
-// ROUTER starts below
+// Bail on old versions of PHP, or if composer has not been run yet to install
+// dependencies. Using dirname( __FILE__ ) here because __DIR__ is PHP5.3+.
+// phpcs:ignore MediaWiki.Usage.DirUsage.FunctionFound
+require_once dirname( __FILE__ ) . '/includes/PHPVersionCheck.php';
+wfEntryPointCheck( 'html', dirname( $_SERVER['SCRIPT_NAME'] ) );
 
-// avoid path traversal
-$_SERVER['SCRIPT_NAME'] = str_replace('/../', '/', $_SERVER['SCRIPT_NAME']);
+require __DIR__ . '/includes/WebStart.php';
 
-// routing aka. rewriting
-if (preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
-    // media dispatcher
-    $_GET['media'] = $m[1];
-    require $_SERVER['DOCUMENT_ROOT'] . '/lib/exe/fetch.php';
-} elseif (preg_match('/^\/_detail\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
-    // image detail view
-    $_GET['media'] = $m[1];
-    require $_SERVER['DOCUMENT_ROOT'] . '/lib/exe/detail.php';
-} elseif (preg_match('/^\/_export\/([^\/]+)\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
-    // exports
-    $_GET['do'] = 'export_' . $m[1];
-    $_GET['id'] = $m[2];
-    require $_SERVER['DOCUMENT_ROOT'] . '/doku.php';
-} elseif (
-    $_SERVER['SCRIPT_NAME'] !== '/index.php' &&
-    file_exists($_SERVER['DOCUMENT_ROOT'] . $_SERVER['SCRIPT_NAME'])
-) {
-    // existing files
-
-    // access limitiations
-    if (
-        preg_match('/\/([._]ht|README$|VERSION$|COPYING$)/', $_SERVER['SCRIPT_NAME']) ||
-        preg_match('/^\/(data|conf|bin|inc)\//', $_SERVER['SCRIPT_NAME'])
-    ) {
-        header('HTTP/1.1 403 Forbidden');
-        die('Access denied');
-    }
-
-    if (str_ends_with($_SERVER['SCRIPT_NAME'], '.php')) {
-        # php scripts
-        require $_SERVER['DOCUMENT_ROOT'] . $_SERVER['SCRIPT_NAME'];
-    } else {
-        # static files
-        return false;
-    }
-} else {
-    // treat everything else as a potential wiki page
-    // working around https://bugs.php.net/bug.php?id=61286
-    $request_path = preg_split('/\?/', $_SERVER['REQUEST_URI'], 2)[0];
-    if (isset($_SERVER['PATH_INFO'])) {
-        $_GET['id'] = $_SERVER['PATH_INFO'];
-    } elseif ($request_path != '/' && $request_path != '/index.php') {
-        $_GET['id'] = $_SERVER['SCRIPT_NAME'];
-    }
-
-    require $_SERVER['DOCUMENT_ROOT'] . '/doku.php';
-}
+// Create the entry point object and call run() to handle the request.
+( new ActionEntryPoint(
+	RequestContext::getMain(),
+	new EntryPointEnvironment(),
+	// TODO: Maybe create a light-weight services container here instead.
+	MediaWikiServices::getInstance()
+) )->run();
