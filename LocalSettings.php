@@ -31,7 +31,7 @@ $wgSitename = "AstRO";
 $wgScriptPath = "/astro-wiki";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://localhost";
+$wgServer = "http://astro-wiki.onrender.com";
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
