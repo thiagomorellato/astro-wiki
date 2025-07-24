@@ -1,18 +1,21 @@
 FROM php:8.1-apache
 
-# Instala dependências do MediaWiki
+# Instala dependências do sistema
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libonig-dev \
     libxml2-dev \
+    libicu-dev \
     zip \
     unzip \
     git \
     mariadb-client \
     wget \
-    nano \
-    && docker-php-ext-install pdo pdo_mysql mysqli
+    nano
+
+# Instala extensões PHP
+RUN docker-php-ext-install intl pdo pdo_mysql mysqli
 
 # Ativa mod_rewrite do Apache
 RUN a2enmod rewrite
