@@ -11,7 +11,7 @@ services:
       MEDIAWIKI_DB_PORT: 3306
       MEDIAWIKI_DB_NAME: astro_wiki
       MEDIAWIKI_DB_USER: astro_user
-      MEDIAWIKI_DB_PASSWORD: Possopressentir!
+      MEDIAWIKI_DB_PASSWORD: ${MEDIAWIKI_DB_PASSWORD}
     volumes:
       - mediawiki_data:/var/www/html
 
