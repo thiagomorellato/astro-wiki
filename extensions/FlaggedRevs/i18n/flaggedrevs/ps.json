@@ -1,0 +1,38 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ahmed-Najib-Biabani-Ibrahimkhel",
+			"Amjad Khan",
+			"Baloch Khan"
+		]
+	},
+	"editor": "سمونگر",
+	"flaggedrevs": "رپی لرونکې مخليدنې",
+	"flaggedrevs-pref-UI": "بنسټيز ليدنمخ:",
+	"prefs-flaggedrevs-ui": "سمون مخليدنه",
+	"flaggedrevs-hidereviewed-hide": "پټول",
+	"flaggedrevs-hidereviewed-show": "ښکاره کول",
+	"group-editor": "سمونگران",
+	"group-editor-member": "{{GENDER:$1|سمونگر}}",
+	"group-reviewer": "مخکتونکي",
+	"group-reviewer-member": "{{GENDER:$1|مخکتونکی}}",
+	"grouppage-editor": "{{ns:project}}:سمونگر",
+	"reviewer": "مخکتونکی",
+	"revreview-accuracy": "کره توب",
+	"revreview-accuracy-2": "کره",
+	"revreview-accuracy-3": "سمو سرچينو څخه برخمن",
+	"revreview-current": "بدلونونو ته تم",
+	"revreview-submitedit": "بدلونونه ورسپارل",
+	"revreview-oldrating": "دا و ارزېده:",
+	"revreview-toggle-title": "څرگندونې ښکاره کول/پټول",
+	"specialpages-group-quality": "سمون مخليدنه",
+	"revreview-defaultfilter": "تلواليزه بڼه:",
+	"revreview-def-all": "هر يو",
+	"revreview-def-draft": "تازه",
+	"revreview-def-stable": "ثابت",
+	"revreview-restriction-any": "هر يو",
+	"revreview-restriction-none": "هېڅ",
+	"revreview-reviewlink": "pending edits",
+	"tooltip-ca-current": "دا مخ د بدلونونو د رامنځ ته کېدو د انتظار په حال کې کتل",
+	"flaggedrevs-protect-none": "ټول کارنان پرېښودل"
+}
