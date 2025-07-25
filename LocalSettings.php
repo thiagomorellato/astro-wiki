@@ -17,8 +17,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgSitename = "AstRO";
 
-$wgScriptPath = "/astro-wiki";
-$wgServer = "http://localhost";
+$wgScriptPath = "";
+$wgServer = "https://astro-wiki.onrender.com";
 $wgResourceBasePath = $wgScriptPath;
 
 $wgLogos = [
