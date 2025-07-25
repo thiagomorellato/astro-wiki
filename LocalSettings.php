@@ -28,10 +28,10 @@ $wgSitename = "AstRO";
 ## For more information on customizing the URLs
 ## (like /w/index.php/Page_title to /wiki/Page_title) please see:
 ## https://www.mediawiki.org/wiki/Manual:Short_URL
-$wgScriptPath = "/astro-wiki";
+$wgScriptPath = "";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://astro-wiki.onrender.com";
+$wgServer = "https://astro-wiki.onrender.com";
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
@@ -160,3 +160,5 @@ $wgFlaggedRevsUIFreedom = true;
 // Define que apenas a versão aprovada é exibida
 $wgFlaggedRevsDisplay = true;
 $wgFlaggedRevsAutoReview = false;
+
+error_reporting( E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED );
