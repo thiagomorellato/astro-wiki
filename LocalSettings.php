@@ -15,137 +15,74 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
-
-
-
-## Uncomment this to disable output compression
-# $wgDisableOutputCompression = true;
-
 $wgSitename = "AstRO";
 
-## The URL base path to the directory containing the wiki;
-## defaults for all runtime URL paths are based off of this.
-## For more information on customizing the URLs
-## (like /w/index.php/Page_title to /wiki/Page_title) please see:
-## https://www.mediawiki.org/wiki/Manual:Short_URL
-$wgScriptPath = "";
-
-## The protocol and server name to use in fully-qualified URLs
-$wgServer = "https://astro-wiki.onrender.com";
-
-## The URL path to static resources (images, scripts, etc.)
+$wgScriptPath = "/astro-wiki";
+$wgServer = "http://localhost";
 $wgResourceBasePath = $wgScriptPath;
 
-## The URL paths to the logo.  Make sure you change this from the default,
-## or else you'll overwrite your logo when you upgrade!
 $wgLogos = [
-	'1x' => "$wgResourceBasePath/resources/assets/logofundo.svg",
-	'icon' => "$wgResourceBasePath/resources/assets/logofundo.svg",
+	'1x' => "$wgResourceBasePath/resources/assets/Logofundo.svg",
+	'icon' => "$wgResourceBasePath/resources/assets/Logofundo.svg",
 ];
 
-## UPO means: this is also a user preference option
-
 $wgEnableEmail = true;
-$wgEnableUserEmail = true; # UPO
+$wgEnableUserEmail = true;
 
 $wgEmergencyContact = "";
 $wgPasswordSender = "";
 
-$wgEnotifUserTalk = false; # UPO
-$wgEnotifWatchlist = false; # UPO
+$wgEnotifUserTalk = false;
+$wgEnotifWatchlist = false;
 $wgEmailAuthentication = true;
 
 ## Database settings
-$wgDBtype = "mysql";
-$wgDBserver = "mysql-2d99cb68-astro-wiki.i.aivencloud.com:12505";
-$wgDBname = "defaultdb";
-$wgDBuser = "avnadmin";
-$wgDBpassword = "AVNS_In_TixA3Nu40_VyVqk_";
-
-# MySQL specific settings
-$wgDBprefix = "mw_";
+$wgDBtype = "postgres";
+$wgDBserver = getenv("MW_DB_SERVER");
+$wgDBport = "5432";
+$wgDBname = getenv("MW_DB_NAME");
+$wgDBuser = getenv("MW_DB_USER");
+$wgDBpassword = getenv("MW_DB_PASS");
 $wgDBssl = true;
-$wgDBsslCAFile = __DIR__ . "/ssl/ca.pem"; // se estiver na raiz do projeto
 
-# MySQL table options to use during installation or update
-$wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
+$wgDBmwschema = "public";
 
-# Shared database table
-# This has no effect unless $wgSharedDB is also set.
 $wgSharedTables[] = "actor";
 
-## Shared memory settings
 $wgMainCacheType = CACHE_NONE;
 $wgMemCachedServers = [];
 
-## To enable image uploads, make sure the 'images' directory
-## is writable, then set this to true:
-#$wgEnableUploads = true;
-#$wgUseImageMagick = true;
-#$wgImageMagickConvertCommand = "/usr/bin/convert";
+$wgEnableUploads = false;
 
-# InstantCommons allows wiki to use images from https://commons.wikimedia.org
 $wgUseInstantCommons = false;
+$wgPingback = true;
 
-# Periodically send a pingback to https://www.mediawiki.org/ with basic data
-# about this MediaWiki instance. The Wikimedia Foundation shares this data
-# with MediaWiki developers to help guide future development efforts.
-$wgPingback = false;
-
-# Site language code, should be one of the list in ./includes/languages/data/Names.php
 $wgLanguageCode = "en";
-
-# Time zone
 $wgLocaltimezone = "UTC";
 
-## Set $wgCacheDirectory to a writable directory on the web server
-## to make your wiki go slightly faster. The directory should not
-## be publicly accessible from the web.
-#$wgCacheDirectory = "$IP/cache";
-
-$wgSecretKey = "e6f8b1c02aa0e0fad1039cbf99a2e6523f06af5e303f266a5e05422c7de65d8d";
-
-# Changing this will log out all existing sessions.
+$wgSecretKey = "740ed9179a712f29f0d430564c461d29f1ca554529c1fcda21619fad58601321";
 $wgAuthenticationTokenVersion = "1";
 
-# Site upgrade key. Must be set to a string (default provided) to turn on the
-# web installer while LocalSettings.php is in place
-$wgUpgradeKey = "8255fd70a04ee726";
+$wgUpgradeKey = "34bf6f8cd3efd512";
 
-## For attaching licensing metadata to pages, and displaying an
-## appropriate copyright notice / icon. GNU Free Documentation
-## License and Creative Commons licenses are supported so far.
-$wgRightsPage = ""; # Set to the title of a wiki page that describes your license/copyright
+$wgRightsPage = "";
 $wgRightsUrl = "";
 $wgRightsText = "";
 $wgRightsIcon = "";
 
-# Path to the GNU diff3 utility. Used for conflict resolution.
 $wgDiff3 = "";
 
-## Default skin: you can change the default skin. Use the internal symbolic
-## names, e.g. 'vector' or 'monobook':
-$wgDefaultSkin = "Citizen";
+$wgDefaultSkin = "citizen";
 
-# Enabled skins.
-# The following skins were automatically enabled:
+wfLoadSkin( 'Citizen' );
 wfLoadSkin( 'MinervaNeue' );
 wfLoadSkin( 'MonoBook' );
 wfLoadSkin( 'Timeless' );
 wfLoadSkin( 'Vector' );
-wfLoadSkin( 'Citizen' );
 
-$wgDefaultMobileSkin = 'citizen';
-
-
-# End of automatically generated settings.
-# Add more configuration options below.
-
-# extensions
-
-# flagged revs
 wfLoadExtension( 'FlaggedRevs' );
 $wgFlaggedRevsReviewerGroups = [ 'sysop' ];
+
 // Aplica revisão em todas as páginas do namespace principal (artigos)
 $wgFlaggedRevsNamespaces = [ NS_MAIN ];
 
@@ -161,4 +98,12 @@ $wgFlaggedRevsUIFreedom = true;
 $wgFlaggedRevsDisplay = true;
 $wgFlaggedRevsAutoReview = false;
 
+# End of automatically generated settings.
+# Add more configuration options below.
+
 error_reporting( E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED );
+
+
+$wgShowExceptionDetails = true;
+$wgDebugDumpSql = true;
+$wgShowDBErrorBacktrace = true;
